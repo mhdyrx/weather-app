@@ -16,7 +16,12 @@
   <body>
     <main class="container">
       <section class="section-search">
-        <input class="search-input" type="text" spellcheck="false" />
+        <input
+          class="search-input"
+          type="text"
+          spellcheck="false"
+          placeholder="Enter the city name"
+        />
         <button class="search-button">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +39,17 @@
           </svg>
         </button>
       </section>
-      <section class="section-display"></section>
+      <section class="section-display">
+        <h1 class="display-city-name">Tokyo</h1>
+
+        <img
+          class="display-weather-icon"
+          src="node_modules/@meteocons/svg/fill/cloudy.svg"
+          alt="Weather condition svg"
+        />
+
+        <p class="display-degree"><span>23</span>°C</p>
+      </section>
     </main>
   </body>
 </html>
