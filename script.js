@@ -8,15 +8,20 @@ const degree = document.querySelector(".display-degree");
 const weatherImg = document.querySelector(".display-weather-icon");
 const wind = document.querySelector(".display-more-details-desc-wind");
 const humidity = document.querySelector(".display-more-details-desc-humidity");
+const favoriteBtn = document.querySelector(".favorite-button");
 
 const getCityCoords = async function (city) {
-  const response = await fetch(
-    `https://geocode.maps.co/search?q=${city}&api_key=${API_KEY}&accept-language=en`,
-  );
+  try {
+    const response = await fetch(
+      `https://geocode.maps.co/search?q=${city}&api_key=${API_KEY}&accept-language=en`,
+    );
 
-  const data = await response.json();
+    const data = await response.json();
 
-  return data;
+    return data;
+  } catch (err) {
+    alert(err);
+  }
 };
 
 const weatherIcon = function (weatherCode, isDay) {
@@ -51,31 +56,68 @@ const displayWeather = function (data, cityName) {
   degree.textContent = Math.round(data.current.temperature_2m) + "°C";
   name.textContent = cityName;
   weatherImg.src = imageSource;
-
-  // wind.textContent = "";
   humidity.textContent = data.current.relative_humidity_2m + "%";
   wind.textContent = data.current.wind_speed_10m + " km/h";
 };
 
 const searchCityData = async function (city) {
-  const cityData = await getCityCoords(city);
-  const cityName = cityData[0].name;
+  try {
+    const cityData = await getCityCoords(city);
+    const cityName = cityData[0].name;
 
-  const { lat, lon } = cityData[0];
+    const { lat, lon } = cityData[0];
 
-  const response = await fetch(
-    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_speed_10m,precipitation,temperature_2m,apparent_temperature,relative_humidity_2m,is_day,weather_code,precipitation`,
-  );
+    const response = await fetch(
+      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_speed_10m,precipitation,temperature_2m,apparent_temperature,relative_humidity_2m,is_day,weather_code,precipitation`,
+    );
 
-  const data = await response.json();
+    const data = await response.json();
 
-  console.log(data);
-  displayWeather(data, cityName);
+    renderFavorite(cityName);
+    displayWeather(data, cityName);
+  } catch (err) {
+    console.error("Please enter a valid city name");
+  }
 };
 
 const clearInputEl = function () {
   searchInput.value = "";
   searchInput.blur();
+};
+
+let favorites = [];
+
+const toggleFavoritesBtn = function (city) {
+  if (favorites.includes(city)) favorites.pop(city);
+  else favorites.push(city);
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+};
+
+const renderFavorite = function (city) {
+  if (!city) return;
+
+  if (favorites.includes(city))
+    favoriteBtn.innerHTML = `
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      class="size-6"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+        clip-rule="evenodd"
+      />
+    </svg>
+`;
+  else
+    favoriteBtn.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+    </svg>
+
+`;
 };
 
 searchBtn.addEventListener("click", function () {
@@ -89,4 +131,19 @@ searchInput.addEventListener("keydown", function (e) {
   if (e.key !== "Enter") return;
   searchCityData(searchInput.value);
   clearInputEl();
+  renderFavorite(name.textContent);
 });
+
+favoriteBtn.addEventListener("click", function () {
+  toggleFavoritesBtn(name.textContent);
+  renderFavorite(name.textContent);
+});
+
+const init = function () {
+  favorites = JSON.parse(localStorage.getItem("favorites"));
+  if (favorites.length > 0) searchCityData(favorites.at(-1));
+  else searchCityData("Madagascar");
+  renderFavorite();
+};
+
+init();
