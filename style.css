@@ -1,0 +1,44 @@
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+
+  background: linear-gradient(#93bfcf, #6096b4);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: 75rem;
+  background-color: #ecf2ff;
+  border-radius: 3rem;
+}
+
+.section-search {
+  padding: 5rem;
+  width: 100%;
+}
+
+.section-button {
+  background-color: #140e0e;
+  padding: 1rem;
+  border: none;
+}
