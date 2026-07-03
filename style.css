@@ -19,7 +19,7 @@ body {
   justify-content: center;
   align-items: center;
 
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .container {
@@ -27,7 +27,7 @@ body {
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  max-width: 70%;
+  max-width: 37.5rem;
   background-color: #ecf2ff;
   border-radius: 3rem;
 }
@@ -50,11 +50,11 @@ body {
   border-radius: 50%;
   padding: 1rem;
   border: none;
+  transition: background-color 0.2s;
 }
 
 .search-button svg {
-  display: flex;
-  justify-content: center;
+  display: block;
 
   width: 3rem;
   height: 3rem;
@@ -64,8 +64,6 @@ body {
 
 .search-button:hover {
   background-color: #a7cfde;
-
-  transition: background-color 0.2s;
 }
 
 .search-input {
@@ -81,7 +79,7 @@ body {
 }
 
 .section-display {
-  padding: 5rem;
+  padding: 5rem 5%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -92,26 +90,48 @@ body {
   background-color: #ffffff;
 }
 
-.display-city {
-  display: flex;
-  align-items: center;
-}
-
 .display-city-name {
   color: #394867;
-  font-size: 4.5rem;
+  font-size: 4rem;
   font-weight: 800;
   margin-bottom: 1rem;
 }
 
 .display-weather-icon {
-  width: 70%;
-  height: 70%;
-  margin: -15% -20% -5%;
+  width: 60%;
+  height: 60%;
+  margin-top: -10%;
 }
 
 .display-degree {
   font-size: 3rem;
   color: #394867;
   font-weight: 600;
+}
+
+.display-more-details {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.details-box {
+  margin-top: 5rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.display-more-details-icons {
+  width: 60%;
+  margin-top: -10%;
+  display: block;
+}
+
+.display-more-details-desc {
+  font-size: 1.25rem;
+  color: #394867;
+  font-weight: 400;
 }
