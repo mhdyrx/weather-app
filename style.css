@@ -27,16 +27,16 @@ body {
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  max-width: 30%;
+  max-width: 70%;
   background-color: #ecf2ff;
   border-radius: 3rem;
 }
 
 .section-search {
-  padding: 5rem;
+  padding: 5%;
   width: 100%;
 
-  max-height: 1rem;
+  max-height: 10%;
 
   display: flex;
   justify-content: center;
@@ -95,23 +95,23 @@ body {
 .display-city {
   display: flex;
   align-items: center;
-  margin-right: auto;
 }
 
 .display-city-name {
   color: #394867;
-  font-size: 6rem;
+  font-size: 4.5rem;
   font-weight: 800;
+  margin-bottom: 1rem;
 }
 
 .display-weather-icon {
-  width: 100%;
-  height: 100%;
-  margin: -20% -20% -17% -20%;
+  width: 70%;
+  height: 70%;
+  margin: -15% -20% -5%;
 }
 
 .display-degree {
-  font-size: 4rem;
+  font-size: 3rem;
   color: #394867;
   font-weight: 600;
 }
