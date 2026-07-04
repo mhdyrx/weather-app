@@ -39,53 +39,107 @@
           </svg>
         </button>
       </section>
-      <section class="section-display">
-        <button class="favorite-button"></button>
-        <img
-          class="display-weather-icon"
-          src="node_modules/@meteocons/svg/fill/clear-night.svg"
-          alt="Weather condition svg"
-        />
+      <section class="section-displays">
+        <div class="display-weather">
+          <button class="favorite-button"></button>
+          <img
+            class="display-weather-icon"
+            src="node_modules/@meteocons/svg/fill/clear-night.svg"
+            alt="Weather condition svg"
+          />
 
-        <h1 class="display-city-name">Madagascar</h1>
-        <p class="display-degree">13°C</p>
-        <div class="display-more-details">
-          <div class="details-box">
-            <img
-              class="display-more-details-icons"
-              src="node_modules/@meteocons/svg/fill/wind.svg"
-              alt=""
-            />
-            <p class="display-more-details-desc-wind">5.2 km/h</p>
-          </div>
-          <div class="details-box">
-            <img
-              class="display-more-details-icons"
-              src="node_modules/@meteocons/svg/fill/humidity.svg"
-              alt=""
-            />
-            <p class="display-more-details-desc-humidity">72%</p>
+          <h1 class="display-city-name">Madagascar</h1>
+          <p class="display-degree">13°C</p>
+          <div class="display-more-details">
+            <div class="details-box">
+              <img
+                class="display-more-details-icons"
+                src="node_modules/@meteocons/svg/fill/wind.svg"
+                alt=""
+              />
+              <p class="display-more-details-desc-wind">5.2 km/h</p>
+            </div>
+            <div class="details-box">
+              <img
+                class="display-more-details-icons"
+                src="node_modules/@meteocons/svg/fill/humidity.svg"
+                alt=""
+              />
+              <p class="display-more-details-desc-humidity">72%</p>
+            </div>
           </div>
         </div>
-      </section>
-      <section class="spinner">
-        <svg
-          fill="#93bfcf"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M12,23a9.63,9.63,0,0,1-8-9.5,9.51,9.51,0,0,1,6.79-9.1A1.66,1.66,0,0,0,12,2.81h0a1.67,1.67,0,0,0-1.94-1.64A11,11,0,0,0,12,23Z"
+        <div class="display-spinner">
+          <svg
+            fill="#93bfcf"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <animateTransform
-              attributeName="transform"
-              type="rotate"
-              dur="0.75s"
-              values="0 12 12;360 12 12"
-              repeatCount="indefinite"
-            />
-          </path>
-        </svg>
+            <circle cx="12" cy="12" r="0">
+              <animate
+                id="spinner_0Nme"
+                begin="0;spinner_ITag.begin+0.4s"
+                attributeName="r"
+                calcMode="spline"
+                dur="1.2s"
+                values="0;11"
+                keySplines=".52,.6,.25,.99"
+                fill="freeze"
+              />
+              <animate
+                begin="0;spinner_ITag.begin+0.4s"
+                attributeName="opacity"
+                calcMode="spline"
+                dur="1.2s"
+                values="1;0"
+                keySplines=".52,.6,.25,.99"
+                fill="freeze"
+              />
+            </circle>
+            <circle cx="12" cy="12" r="0">
+              <animate
+                id="spinner_f83A"
+                begin="spinner_0Nme.begin+0.4s"
+                attributeName="r"
+                calcMode="spline"
+                dur="1.2s"
+                values="0;11"
+                keySplines=".52,.6,.25,.99"
+                fill="freeze"
+              />
+              <animate
+                begin="spinner_0Nme.begin+0.4s"
+                attributeName="opacity"
+                calcMode="spline"
+                dur="1.2s"
+                values="1;0"
+                keySplines=".52,.6,.25,.99"
+                fill="freeze"
+              />
+            </circle>
+            <circle cx="12" cy="12" r="0">
+              <animate
+                id="spinner_ITag"
+                begin="spinner_0Nme.begin+0.8s"
+                attributeName="r"
+                calcMode="spline"
+                dur="1.2s"
+                values="0;11"
+                keySplines=".52,.6,.25,.99"
+                fill="freeze"
+              />
+              <animate
+                begin="spinner_0Nme.begin+0.8s"
+                attributeName="opacity"
+                calcMode="spline"
+                dur="1.2s"
+                values="1;0"
+                keySplines=".52,.6,.25,.99"
+                fill="freeze"
+              />
+            </circle>
+          </svg>
+        </div>
       </section>
     </main>
   </body>

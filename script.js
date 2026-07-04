@@ -10,6 +10,8 @@ const wind = document.querySelector(".display-more-details-desc-wind");
 const humidity = document.querySelector(".display-more-details-desc-humidity");
 const favoriteBtn = document.querySelector(".favorite-button");
 const container = document.querySelector(".container");
+const weatherContainer = document.querySelector(".display-weather");
+const spinnerContainer = document.querySelector(".display-spinner");
 
 const getCityCoords = async function (city) {
   try {
@@ -50,6 +52,9 @@ const weatherIcon = function (weatherCode, isDay) {
 };
 
 const displayWeather = function (data, cityName) {
+  spinnerContainer.style.display = "none";
+  weatherContainer.style.display = "flex";
+
   const weatherCode = data.current.weather_code;
   const isDay = data.current.is_day === 1;
   const imageSource = weatherIcon(weatherCode, isDay);
@@ -62,12 +67,13 @@ const displayWeather = function (data, cityName) {
 };
 
 const displaySpinner = function () {
-  container.innerHTML = `
-  <svg fill="#93bfcf" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12,23a9.63,9.63,0,0,1-8-9.5,9.51,9.51,0,0,1,6.79-9.1A1.66,1.66,0,0,0,12,2.81h0a1.67,1.67,0,0,0-1.94-1.64A11,11,0,0,0,12,23Z"><animateTransform attributeName="transform" type="rotate" dur="0.75s" values="0 12 12;360 12 12" repeatCount="indefinite"/></path></svg>`;
+  spinnerContainer.style.display = "block";
+  weatherContainer.style.display = "none";
 };
 
 const searchCityData = async function (city) {
   try {
+    displaySpinner();
     const cityData = await getCityCoords(city);
     const cityName = cityData[0].name;
 
