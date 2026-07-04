@@ -156,6 +156,7 @@ const displayFavorites = function (city) {
 };
 
 const displayFavoritesList = function (city) {
+  suggestionsList.innerHTML = "Tokyo";
   const btnEl = `
   <div class="favorites-list-item">
     <button class="favorites-list-item-button">${city}</button>
@@ -176,6 +177,7 @@ const displayFavoritesList = function (city) {
     </svg>
   </div>`;
 
+  // if (favorites.includes(city)) return;
   suggestionsList.insertAdjacentHTML("beforeend", btnEl);
 };
 
@@ -187,11 +189,12 @@ window.addEventListener("click", function (e) {
     const cityTitle = item.querySelector(
       ".favorites-list-item-button",
     ).textContent;
-
-    console.log(cityTitle);
+    favorites.pop(cityTitle);
+    favorites.forEach((city) => displayFavoritesList(city));
   }
   if (e.target === searchInput) {
     if (searchInput.value) return;
+    if (favorites.length === 0) return;
     suggestionsList.classList.toggle("hidden");
   } else suggestionsList.classList.add("hidden");
 });
@@ -218,6 +221,8 @@ searchInput.addEventListener("keydown", function (e) {
 favoriteBtn.addEventListener("click", function () {
   toggleFavoritesBtn(name.textContent);
   displayFavorites(name.textContent);
+  favorites.forEach((city) => displayFavoritesList(city));
+  console.log(favorites);
 });
 
 suggestionsList.addEventListener("click", function (e) {
