@@ -9,6 +9,7 @@ const weatherImg = document.querySelector(".display-weather-icon");
 const wind = document.querySelector(".display-more-details-desc-wind");
 const humidity = document.querySelector(".display-more-details-desc-humidity");
 const favoriteBtn = document.querySelector(".favorite-button");
+const container = document.querySelector(".container");
 
 const getCityCoords = async function (city) {
   try {
@@ -60,6 +61,11 @@ const displayWeather = function (data, cityName) {
   wind.textContent = data.current.wind_speed_10m + " km/h";
 };
 
+const displaySpinner = function () {
+  container.innerHTML = `
+  <svg fill="#93bfcf" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12,23a9.63,9.63,0,0,1-8-9.5,9.51,9.51,0,0,1,6.79-9.1A1.66,1.66,0,0,0,12,2.81h0a1.67,1.67,0,0,0-1.94-1.64A11,11,0,0,0,12,23Z"><animateTransform attributeName="transform" type="rotate" dur="0.75s" values="0 12 12;360 12 12" repeatCount="indefinite"/></path></svg>`;
+};
+
 const searchCityData = async function (city) {
   try {
     const cityData = await getCityCoords(city);
@@ -73,7 +79,7 @@ const searchCityData = async function (city) {
 
     const data = await response.json();
 
-    renderFavorite(cityName);
+    displayFavorites(cityName);
     displayWeather(data, cityName);
   } catch (err) {
     console.error("Please enter a valid city name");
@@ -93,7 +99,7 @@ const toggleFavoritesBtn = function (city) {
   localStorage.setItem("favorites", JSON.stringify(favorites));
 };
 
-const renderFavorite = function (city) {
+const displayFavorites = function (city) {
   if (!city) return;
 
   if (favorites.includes(city))
@@ -131,19 +137,19 @@ searchInput.addEventListener("keydown", function (e) {
   if (e.key !== "Enter") return;
   searchCityData(searchInput.value);
   clearInputEl();
-  renderFavorite(name.textContent);
+  displayFavorites(name.textContent);
 });
 
 favoriteBtn.addEventListener("click", function () {
   toggleFavoritesBtn(name.textContent);
-  renderFavorite(name.textContent);
+  displayFavorites(name.textContent);
 });
 
 const init = function () {
   favorites = JSON.parse(localStorage.getItem("favorites"));
   if (favorites.length > 0) searchCityData(favorites.at(-1));
   else searchCityData("Madagascar");
-  renderFavorite();
+  displayFavorites();
 };
 
 init();
