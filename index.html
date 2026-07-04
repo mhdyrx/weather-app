@@ -16,12 +16,18 @@
   <body>
     <main class="container">
       <section class="section-search">
-        <input
-          class="search-input"
-          type="text"
-          spellcheck="false"
-          placeholder="Enter the city name"
-        />
+        <div class="search-wrapper">
+          <input
+            class="search-input"
+            type="text"
+            spellcheck="false"
+            placeholder="Enter the city name"
+          />
+          <div class="search-suggestions hidden">
+            <div class="favorites-list"></div>
+          </div>
+        </div>
+
         <button class="search-button">
           <svg
             xmlns="http://www.w3.org/2000/svg"

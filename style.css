@@ -27,8 +27,11 @@ body {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 37.5rem;
+  max-width: 45rem;
+  min-width: 30%;
   height: 60rem;
+
+  padding: 3% 5%;
 }
 
 .section-search {
@@ -97,6 +100,13 @@ body {
 }
 
 /* ********************************************* */
+
+.search-wrapper {
+  width: 100%;
+
+  position: relative;
+}
+
 .search-input {
   background-color: #ffffff;
   border-radius: 100rem;
@@ -105,6 +115,79 @@ body {
   border: none;
 
   width: 100%;
+
+  z-index: 10;
+
+  position: inherit;
+}
+
+.search-suggestions {
+  background-color: #ffffff;
+  width: inherit;
+
+  position: absolute;
+  top: 50%;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 5%;
+
+  border-bottom-right-radius: 3rem;
+  border-bottom-left-radius: 3rem;
+
+  box-shadow: 0rem 0.5rem 1rem #39486717;
+
+  z-index: 1;
+}
+
+.hidden {
+  display: none;
+}
+
+.favorites-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5%;
+}
+
+.favorites-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.favorites-list-item-button {
+  font-size: 1.25rem;
+  color: #777;
+  background: transparent;
+  border: none;
+  text-align: left;
+  font-weight: 500;
+  padding: 5% 1rem;
+
+  transition: color 0.2s;
+}
+
+.favorites-list-item-button:hover {
+  color: #444;
+}
+
+.favorites-list-item svg {
+  width: 8%;
+  height: 8%;
+  color: #777;
+  transition: color transform 0.2s;
+  transition: transform 0.2s;
+}
+
+.favorites-list-item svg:hover {
+  color: #444;
+  transform: scale(1.15);
+}
+
+.favorites-list:first-child {
+  padding-top: 7%;
 }
 
 *:focus {
@@ -117,7 +200,8 @@ body {
   align-items: center;
 
   height: 50rem;
-  width: 37.5rem;
+  max-width: 37.5rem;
+  width: 100%;
   border-bottom-left-radius: 3rem;
   border-bottom-right-radius: 3rem;
 

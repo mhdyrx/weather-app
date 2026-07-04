@@ -14,6 +14,7 @@ const weatherContainer = document.querySelector(".display-weather");
 const spinnerContainer = document.querySelector(".display-spinner");
 const errorContainer = document.querySelector(".display-error");
 const errorMessage = document.querySelector(".error-desc");
+const suggestionsList = document.querySelector(".search-suggestions");
 
 const weatherIcon = function (weatherCode, isDay) {
   let weatherImgSource = "node_modules/@meteocons/svg/fill";
@@ -154,6 +155,47 @@ const displayFavorites = function (city) {
 `;
 };
 
+const displayFavoritesList = function (city) {
+  const btnEl = `
+  <div class="favorites-list-item">
+    <button class="favorites-list-item-button">${city}</button>
+
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="favorites-list-item-close"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M6 18 18 6M6 6l12 12"
+      />
+    </svg>
+  </div>`;
+
+  suggestionsList.insertAdjacentHTML("beforeend", btnEl);
+};
+
+window.addEventListener("click", function (e) {
+  const removeItemBtn = e.target.closest(".favorites-list-item-close");
+
+  if (removeItemBtn) {
+    const item = removeItemBtn.parentElement;
+    const cityTitle = item.querySelector(
+      ".favorites-list-item-button",
+    ).textContent;
+
+    console.log(cityTitle);
+  }
+  if (e.target === searchInput) {
+    if (searchInput.value) return;
+    suggestionsList.classList.toggle("hidden");
+  } else suggestionsList.classList.add("hidden");
+});
+
 searchBtn.addEventListener("click", function () {
   if (!searchInput.value) return;
   searchCityData(searchInput.value);
@@ -161,11 +203,16 @@ searchBtn.addEventListener("click", function () {
 });
 
 searchInput.addEventListener("keydown", function (e) {
-  if (!searchInput.value) return;
-  if (e.key !== "Enter") return;
-  searchCityData(searchInput.value);
-  clearInputEl();
-  displayFavorites(name.textContent);
+  if (e.key === "Enter") {
+    searchCityData(searchInput.value);
+    clearInputEl();
+    displayFavorites(name.textContent);
+    suggestionsList.classList.add("hidden");
+  }
+
+  if (e.key === "Escape") {
+    suggestionsList.classList.add("hidden");
+  }
 });
 
 favoriteBtn.addEventListener("click", function () {
@@ -173,11 +220,17 @@ favoriteBtn.addEventListener("click", function () {
   displayFavorites(name.textContent);
 });
 
+suggestionsList.addEventListener("click", function (e) {
+  if (!e.target.classList.contains("favorites-list-item-button")) return;
+  searchCityData(e.target.textContent);
+});
+
 const init = function () {
   favorites = JSON.parse(localStorage.getItem("favorites"));
   if (favorites.length > 0) searchCityData(favorites.at(-1));
   else searchCityData("Madagascar");
   displayFavorites();
+  favorites.forEach((city) => displayFavoritesList(city));
 };
 
 init();
