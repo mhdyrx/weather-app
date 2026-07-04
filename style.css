@@ -125,7 +125,7 @@ body {
 }
 
 .display-weather {
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -138,6 +138,33 @@ body {
   display: none;
   height: 20%;
   width: 20%;
+}
+
+.display-error {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+
+  margin-top: -20%;
+}
+
+.display-error img {
+  height: 60%;
+
+  margin: -10%;
+}
+
+.error-desc {
+  font-size: 1.75rem;
+  color: #394867;
+  font-weight: 500;
+  line-height: 1.5;
+
+  padding: 0 2rem;
+  text-align: center;
 }
 
 .display-city-name {

@@ -12,20 +12,8 @@ const favoriteBtn = document.querySelector(".favorite-button");
 const container = document.querySelector(".container");
 const weatherContainer = document.querySelector(".display-weather");
 const spinnerContainer = document.querySelector(".display-spinner");
-
-const getCityCoords = async function (city) {
-  try {
-    const response = await fetch(
-      `https://geocode.maps.co/search?q=${city}&api_key=${API_KEY}&accept-language=en`,
-    );
-
-    const data = await response.json();
-
-    return data;
-  } catch (err) {
-    alert(err);
-  }
-};
+const errorContainer = document.querySelector(".display-error");
+const errorMessage = document.querySelector(".error-desc");
 
 const weatherIcon = function (weatherCode, isDay) {
   let weatherImgSource = "node_modules/@meteocons/svg/fill";
@@ -51,7 +39,22 @@ const weatherIcon = function (weatherCode, isDay) {
   return weatherImgSource;
 };
 
+const getCityCoords = async function (city) {
+  try {
+    const response = await fetch(
+      `https://geocode.maps.co/search?q=${city}&api_key=${API_KEY}&accept-language=en`,
+    );
+
+    const data = await response.json();
+
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
+
 const displayWeather = function (data, cityName) {
+  errorContainer.style.display = "none";
   spinnerContainer.style.display = "none";
   weatherContainer.style.display = "flex";
 
@@ -69,12 +72,29 @@ const displayWeather = function (data, cityName) {
 const displaySpinner = function () {
   spinnerContainer.style.display = "block";
   weatherContainer.style.display = "none";
+  errorContainer.style.display = "none";
+};
+
+const displayError = function (message) {
+  spinnerContainer.style.display = "none";
+  weatherContainer.style.display = "none";
+  errorContainer.style.display = "flex";
+
+  errorMessage.innerHTML = message;
 };
 
 const searchCityData = async function (city) {
   try {
     displaySpinner();
+
+    if (city.length <= 2)
+      throw new Error("Invalid city name.<br>Please enter a valid name.");
+
     const cityData = await getCityCoords(city);
+
+    if (cityData.length < 1)
+      throw new Error("Cannot find the city.<br>Please enter a valid name.");
+
     const cityName = cityData[0].name;
 
     const { lat, lon } = cityData[0];
@@ -83,12 +103,14 @@ const searchCityData = async function (city) {
       `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_speed_10m,precipitation,temperature_2m,apparent_temperature,relative_humidity_2m,is_day,weather_code,precipitation`,
     );
 
+    if (!response.ok) throw new Error("Something went wrong.");
+
     const data = await response.json();
 
     displayFavorites(cityName);
     displayWeather(data, cityName);
   } catch (err) {
-    console.error("Please enter a valid city name");
+    displayError(err.message);
   }
 };
 
