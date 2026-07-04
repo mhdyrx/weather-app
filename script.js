@@ -155,9 +155,10 @@ const displayFavorites = function (city) {
 `;
 };
 
-const displayFavoritesList = function (city) {
+const displayFavoritesList = function (list) {
   suggestionsList.innerHTML = "Tokyo";
-  const btnEl = `
+  list.forEach((city) => {
+    const btnEl = `
   <div class="favorites-list-item">
     <button class="favorites-list-item-button">${city}</button>
 
@@ -177,8 +178,8 @@ const displayFavoritesList = function (city) {
     </svg>
   </div>`;
 
-  // if (favorites.includes(city)) return;
-  suggestionsList.insertAdjacentHTML("beforeend", btnEl);
+    suggestionsList.insertAdjacentHTML("beforeend", btnEl);
+  });
 };
 
 window.addEventListener("click", function (e) {
@@ -190,7 +191,8 @@ window.addEventListener("click", function (e) {
       ".favorites-list-item-button",
     ).textContent;
     favorites.pop(cityTitle);
-    favorites.forEach((city) => displayFavoritesList(city));
+    displayFavorites(cityTitle);
+    displayFavoritesList(favorites);
   }
   if (e.target === searchInput) {
     if (searchInput.value) return;
@@ -221,8 +223,7 @@ searchInput.addEventListener("keydown", function (e) {
 favoriteBtn.addEventListener("click", function () {
   toggleFavoritesBtn(name.textContent);
   displayFavorites(name.textContent);
-  favorites.forEach((city) => displayFavoritesList(city));
-  console.log(favorites);
+  displayFavoritesList(favorites);
 });
 
 suggestionsList.addEventListener("click", function (e) {
@@ -235,7 +236,7 @@ const init = function () {
   if (favorites.length > 0) searchCityData(favorites.at(-1));
   else searchCityData("Madagascar");
   displayFavorites();
-  favorites.forEach((city) => displayFavoritesList(city));
+  displayFavoritesList(favorites);
 };
 
 init();
