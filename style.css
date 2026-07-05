@@ -26,9 +26,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
-  max-width: 45rem;
-  min-width: 30%;
+  max-width: 40rem;
+  min-width: 35%;
   height: 60rem;
 
   padding: 3% 5%;
@@ -36,7 +37,11 @@ body {
 
 .section-search {
   padding: 5%;
-  width: 100%;
+
+  width: inherit;
+  max-width: inherit;
+  min-width: inherit;
+
   background-color: #ecf2ff;
 
   border-top-right-radius: 3rem;
@@ -76,14 +81,13 @@ body {
 .favorite-button {
   position: absolute;
   background: transparent;
-  padding: 1.5rem;
   border: none;
   cursor: pointer;
 
   transition: transform 0.2s;
 
-  top: 0;
-  right: 0;
+  top: 0.75rem;
+  right: 0.75rem;
 }
 
 .favorite-button svg {
@@ -199,13 +203,18 @@ body {
 }
 
 .section-displays {
+  position: relative;
+
   display: flex;
   justify-content: center;
   align-items: center;
 
   height: 50rem;
-  max-width: 37.5rem;
-  width: 100%;
+
+  width: inherit;
+  max-width: inherit;
+  min-width: inherit;
+
   border-bottom-left-radius: 3rem;
   border-bottom-right-radius: 3rem;
 
@@ -217,7 +226,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
 
   padding: 5rem 5%;
 }

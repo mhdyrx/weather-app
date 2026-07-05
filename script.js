@@ -18,7 +18,7 @@ const errorMessage = document.querySelector(".error-desc");
 const suggestionsList = document.querySelector(".search-suggestions");
 
 const weatherIcon = function (weatherCode, isDay) {
-  let weatherImgSource = "node_modules/@meteocons/svg/fill";
+  let weatherImgSource = "assets/icons";
 
   if (weatherCode === 0)
     weatherImgSource += `/clear-${isDay ? "day" : "night"}.svg`;
