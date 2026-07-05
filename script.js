@@ -1,5 +1,6 @@
 "use strict";
 const API_KEY = "6a3bb4e63e4b5187470555qfs05ce31";
+const DEFAULT_CITY = "Madagascar";
 
 const searchInput = document.querySelector(".search-input");
 const searchBtn = document.querySelector(".search-button");
@@ -108,7 +109,7 @@ const searchCityData = async function (city) {
 
     const data = await response.json();
 
-    displayFavorites(cityName);
+    updateFavoriteButton(cityName);
     displayWeather(data, cityName);
   } catch (err) {
     displayError(err.message);
@@ -128,9 +129,8 @@ const toggleFavoritesBtn = function (city) {
   localStorage.setItem("favorites", JSON.stringify(favorites));
 };
 
-const displayFavorites = function (city) {
+const updateFavoriteButton = function (city) {
   if (!city) return;
-
   if (favorites.includes(city))
     favoriteBtn.innerHTML = `
     <svg
@@ -156,7 +156,7 @@ const displayFavorites = function (city) {
 };
 
 const displayFavoritesList = function (list) {
-  suggestionsList.innerHTML = "Tokyo";
+  suggestionsList.innerHTML = "";
   list.forEach((city) => {
     const btnEl = `
   <div class="favorites-list-item">
@@ -190,13 +190,15 @@ window.addEventListener("click", function (e) {
     const cityTitle = item.querySelector(
       ".favorites-list-item-button",
     ).textContent;
-    favorites.pop(cityTitle);
-    displayFavorites(cityTitle);
+    const index = favorites.indexOf(cityTitle);
+    favorites.splice(index, 1);
     displayFavoritesList(favorites);
+    if (name.textContent === cityTitle) searchCityData(cityTitle);
   }
   if (e.target === searchInput) {
     if (searchInput.value) return;
     if (favorites.length === 0) return;
+
     suggestionsList.classList.toggle("hidden");
   } else suggestionsList.classList.add("hidden");
 });
@@ -211,7 +213,7 @@ searchInput.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
     searchCityData(searchInput.value);
     clearInputEl();
-    displayFavorites(name.textContent);
+    updateFavoriteButton(name.textContent);
     suggestionsList.classList.add("hidden");
   }
 
@@ -222,7 +224,7 @@ searchInput.addEventListener("keydown", function (e) {
 
 favoriteBtn.addEventListener("click", function () {
   toggleFavoritesBtn(name.textContent);
-  displayFavorites(name.textContent);
+  updateFavoriteButton(name.textContent);
   displayFavoritesList(favorites);
 });
 
@@ -232,10 +234,12 @@ suggestionsList.addEventListener("click", function (e) {
 });
 
 const init = function () {
-  favorites = JSON.parse(localStorage.getItem("favorites"));
+  if (localStorage.getItem("favorites"))
+    favorites = JSON.parse(localStorage.getItem("favorites"));
+
   if (favorites.length > 0) searchCityData(favorites.at(-1));
-  else searchCityData("Madagascar");
-  displayFavorites();
+  else searchCityData(DEFAULT_CITY);
+  updateFavoriteButton();
   displayFavoritesList(favorites);
 };
 

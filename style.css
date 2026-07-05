@@ -157,6 +157,10 @@ body {
   align-items: center;
 }
 
+.favorites-list-item:first-child {
+  padding-top: 5%;
+}
+
 .favorites-list-item-button {
   font-size: 1.25rem;
   color: #777;
